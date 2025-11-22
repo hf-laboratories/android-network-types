@@ -1,0 +1,559 @@
+{
+  "description": "A comprehensive collection of Android Linux networking-related property and environment configuration keys",
+  "version": "1.0.0",
+  "categories": {
+    "system_properties": {
+      "wifi": {
+        "wifi.interface": {
+          "description": "WiFi network interface name",
+          "type": "string",
+          "example": "wlan0"
+        },
+        "wifi.supplicant_scan_interval": {
+          "description": "Supplicant scan interval in seconds",
+          "type": "integer",
+          "example": "15"
+        },
+        "wifi.direct.interface": {
+          "description": "WiFi Direct interface name",
+          "type": "string",
+          "example": "p2p0"
+        },
+        "persist.sys.wifi.only": {
+          "description": "Enable WiFi only mode",
+          "type": "boolean",
+          "example": "1"
+        },
+        "ro.wifi.channels": {
+          "description": "Available WiFi channels",
+          "type": "string",
+          "example": "1-13"
+        }
+      },
+      "mobile_data": {
+        "ro.telephony.default_network": {
+          "description": "Default network type (LTE/3G/2G)",
+          "type": "integer",
+          "example": "9"
+        },
+        "net.mobile.radio": {
+          "description": "Mobile radio state",
+          "type": "string",
+          "example": "on"
+        },
+        "net.lte.ims.data.enabled": {
+          "description": "LTE IMS data enabled status",
+          "type": "boolean",
+          "example": "true"
+        },
+        "gsm.operator.alpha": {
+          "description": "Mobile operator name",
+          "type": "string",
+          "example": "T-Mobile"
+        },
+        "gsm.operator.numeric": {
+          "description": "Mobile country code + mobile network code",
+          "type": "string",
+          "example": "310260"
+        },
+        "gsm.operator.iso-country": {
+          "description": "ISO country code for operator",
+          "type": "string",
+          "example": "us"
+        },
+        "gsm.network.type": {
+          "description": "Current network type",
+          "type": "string",
+          "example": "LTE"
+        },
+        "ril.subscription.types": {
+          "description": "SIM subscription types",
+          "type": "string",
+          "example": "NV,RUIM"
+        }
+      },
+      "dns": {
+        "net.dns1": {
+          "description": "Primary DNS server",
+          "type": "string",
+          "example": "8.8.8.8"
+        },
+        "net.dns2": {
+          "description": "Secondary DNS server",
+          "type": "string",
+          "example": "8.8.4.4"
+        },
+        "net.dns3": {
+          "description": "Tertiary DNS server",
+          "type": "string",
+          "example": "1.1.1.1"
+        },
+        "net.dns4": {
+          "description": "Quaternary DNS server",
+          "type": "string",
+          "example": "1.0.0.1"
+        },
+        "net.rmnet0.dns1": {
+          "description": "Primary DNS for rmnet0 interface",
+          "type": "string",
+          "example": "8.8.8.8"
+        },
+        "net.rmnet0.dns2": {
+          "description": "Secondary DNS for rmnet0 interface",
+          "type": "string",
+          "example": "8.8.4.4"
+        },
+        "dhcp.wlan0.dns1": {
+          "description": "Primary DNS from DHCP for wlan0",
+          "type": "string",
+          "example": "192.168.1.1"
+        },
+        "dhcp.wlan0.dns2": {
+          "description": "Secondary DNS from DHCP for wlan0",
+          "type": "string",
+          "example": "192.168.1.254"
+        }
+      },
+      "network_interfaces": {
+        "net.hostname": {
+          "description": "Device hostname",
+          "type": "string",
+          "example": "android-device"
+        },
+        "net.change": {
+          "description": "Network change counter",
+          "type": "integer",
+          "example": "1"
+        },
+        "net.tcp.buffersize.default": {
+          "description": "Default TCP buffer sizes",
+          "type": "string",
+          "example": "4096,87380,110208,4096,16384,110208"
+        },
+        "net.tcp.buffersize.wifi": {
+          "description": "TCP buffer sizes for WiFi",
+          "type": "string",
+          "example": "524288,1048576,2097152,262144,524288,1048576"
+        },
+        "net.tcp.buffersize.lte": {
+          "description": "TCP buffer sizes for LTE",
+          "type": "string",
+          "example": "524288,1048576,2097152,262144,524288,1048576"
+        },
+        "net.tcp.buffersize.umts": {
+          "description": "TCP buffer sizes for UMTS",
+          "type": "string",
+          "example": "58254,349525,1048576,58254,349525,1048576"
+        },
+        "net.tcp.buffersize.hspa": {
+          "description": "TCP buffer sizes for HSPA",
+          "type": "string",
+          "example": "40778,244668,734003,16777,100663,301990"
+        },
+        "net.tcp.buffersize.edge": {
+          "description": "TCP buffer sizes for EDGE",
+          "type": "string",
+          "example": "4093,26280,70800,4096,16384,70800"
+        },
+        "net.tcp.buffersize.gprs": {
+          "description": "TCP buffer sizes for GPRS",
+          "type": "string",
+          "example": "4092,8760,48000,4096,8760,48000"
+        },
+        "net.tcp.default_init_rwnd": {
+          "description": "TCP default initial receive window",
+          "type": "integer",
+          "example": "60"
+        }
+      },
+      "proxy": {
+        "net.gprs.http-proxy": {
+          "description": "HTTP proxy for GPRS",
+          "type": "string",
+          "example": "proxy.example.com:8080"
+        },
+        "net.http.proxy": {
+          "description": "Global HTTP proxy",
+          "type": "string",
+          "example": "proxy.example.com:8080"
+        }
+      },
+      "vpn": {
+        "vpn.version": {
+          "description": "VPN version",
+          "type": "string",
+          "example": "1.0"
+        }
+      },
+      "tethering": {
+        "net.tethering.noprovisioning": {
+          "description": "Disable tethering provisioning check",
+          "type": "boolean",
+          "example": "true"
+        },
+        "tether.interface": {
+          "description": "Tethering interface name",
+          "type": "string",
+          "example": "usb0"
+        }
+      },
+      "ipv6": {
+        "net.ipv6.autoconf.wlan0": {
+          "description": "IPv6 autoconfiguration for wlan0",
+          "type": "boolean",
+          "example": "1"
+        },
+        "persist.net.doxlat": {
+          "description": "Enable XLAT (IPv4 over IPv6)",
+          "type": "boolean",
+          "example": "true"
+        }
+      },
+      "dhcp": {
+        "dhcp.wlan0.result": {
+          "description": "DHCP result for wlan0",
+          "type": "string",
+          "example": "ok"
+        },
+        "dhcp.wlan0.ipaddress": {
+          "description": "IP address from DHCP for wlan0",
+          "type": "string",
+          "example": "192.168.1.100"
+        },
+        "dhcp.wlan0.gateway": {
+          "description": "Gateway from DHCP for wlan0",
+          "type": "string",
+          "example": "192.168.1.1"
+        },
+        "dhcp.wlan0.mask": {
+          "description": "Netmask from DHCP for wlan0",
+          "type": "string",
+          "example": "255.255.255.0"
+        },
+        "dhcp.wlan0.leasetime": {
+          "description": "DHCP lease time for wlan0",
+          "type": "integer",
+          "example": "3600"
+        },
+        "dhcp.wlan0.server": {
+          "description": "DHCP server for wlan0",
+          "type": "string",
+          "example": "192.168.1.1"
+        }
+      },
+      "radio": {
+        "ril.radio.state": {
+          "description": "Radio state (on/off)",
+          "type": "string",
+          "example": "on"
+        },
+        "persist.radio.apm_sim_not_pwdn": {
+          "description": "Keep SIM powered in airplane mode",
+          "type": "boolean",
+          "example": "1"
+        },
+        "persist.radio.airplane_mode_on": {
+          "description": "Airplane mode state",
+          "type": "boolean",
+          "example": "0"
+        }
+      },
+      "connectivity": {
+        "net.qtaguid_enabled": {
+          "description": "Enable network quota and tagging",
+          "type": "boolean",
+          "example": "1"
+        },
+        "net.redirect_socket_calls.hooked": {
+          "description": "Socket call redirection hook status",
+          "type": "boolean",
+          "example": "true"
+        },
+        "persist.netd.stable_secret": {
+          "description": "Network daemon stable secret for IPv6",
+          "type": "string",
+          "example": "fe80::1"
+        }
+      },
+      "routing": {
+        "net.rmnet0.gw": {
+          "description": "Gateway for rmnet0 interface",
+          "type": "string",
+          "example": "10.0.0.1"
+        },
+        "net.wlan0.gw": {
+          "description": "Gateway for wlan0 interface",
+          "type": "string",
+          "example": "192.168.1.1"
+        }
+      },
+      "nfc": {
+        "net.nfc.port": {
+          "description": "NFC communication port",
+          "type": "integer",
+          "example": "6000"
+        }
+      },
+      "bluetooth": {
+        "bluetooth.enable_timeout_ms": {
+          "description": "Bluetooth enable timeout in milliseconds",
+          "type": "integer",
+          "example": "8000"
+        },
+        "net.bt.name": {
+          "description": "Bluetooth device name",
+          "type": "string",
+          "example": "Android Device"
+        }
+      }
+    },
+    "environment_variables": {
+      "network_config": {
+        "ANDROID_DNS_MODE": {
+          "description": "DNS resolution mode (values: 'local' for device-local resolution, 'remote' for network DNS servers)",
+          "type": "string",
+          "example": "local"
+        },
+        "ANDROID_SOCKET_*": {
+          "description": "Socket file descriptor numbers for named sockets (e.g., ANDROID_SOCKET_zygote contains the FD number)",
+          "type": "integer",
+          "example": "10"
+        },
+        "HOSTNAME": {
+          "description": "Device hostname",
+          "type": "string",
+          "example": "localhost"
+        },
+        "http_proxy": {
+          "description": "HTTP proxy URL",
+          "type": "string",
+          "example": "http://proxy.example.com:8080"
+        },
+        "https_proxy": {
+          "description": "HTTPS proxy URL",
+          "type": "string",
+          "example": "https://proxy.example.com:8080"
+        },
+        "ftp_proxy": {
+          "description": "FTP proxy URL",
+          "type": "string",
+          "example": "ftp://proxy.example.com:21"
+        },
+        "no_proxy": {
+          "description": "Comma-separated list of hosts to bypass proxy",
+          "type": "string",
+          "example": "localhost,127.0.0.1,.local"
+        },
+        "all_proxy": {
+          "description": "Proxy for all protocols",
+          "type": "string",
+          "example": "socks5://proxy.example.com:1080"
+        }
+      }
+    },
+    "kernel_parameters": {
+      "net_sysctl": {
+        "/proc/sys/net/ipv4/ip_forward": {
+          "description": "Enable IPv4 forwarding",
+          "type": "boolean",
+          "example": "0"
+        },
+        "/proc/sys/net/ipv4/tcp_keepalive_time": {
+          "description": "TCP keepalive time in seconds",
+          "type": "integer",
+          "example": "7200"
+        },
+        "/proc/sys/net/ipv4/tcp_keepalive_intvl": {
+          "description": "TCP keepalive probe interval",
+          "type": "integer",
+          "example": "75"
+        },
+        "/proc/sys/net/ipv4/tcp_keepalive_probes": {
+          "description": "Number of TCP keepalive probes",
+          "type": "integer",
+          "example": "9"
+        },
+        "/proc/sys/net/ipv4/tcp_fin_timeout": {
+          "description": "TCP FIN timeout",
+          "type": "integer",
+          "example": "60"
+        },
+        "/proc/sys/net/ipv4/tcp_tw_reuse": {
+          "description": "Enable TCP TIME_WAIT socket reuse",
+          "type": "boolean",
+          "example": "1"
+        },
+        "/proc/sys/net/ipv4/tcp_tw_recycle": {
+          "description": "Enable fast TCP TIME_WAIT socket recycling (DEPRECATED: removed in Linux kernel 4.12+, unsafe with NAT)",
+          "type": "boolean",
+          "example": "0"
+        },
+        "/proc/sys/net/ipv4/tcp_syncookies": {
+          "description": "Enable TCP SYN cookies",
+          "type": "boolean",
+          "example": "1"
+        },
+        "/proc/sys/net/ipv4/tcp_max_syn_backlog": {
+          "description": "Maximum SYN backlog queue size",
+          "type": "integer",
+          "example": "2048"
+        },
+        "/proc/sys/net/ipv4/tcp_rmem": {
+          "description": "TCP read buffer sizes (min, default, max)",
+          "type": "string",
+          "example": "4096 87380 6291456"
+        },
+        "/proc/sys/net/ipv4/tcp_wmem": {
+          "description": "TCP write buffer sizes (min, default, max)",
+          "type": "string",
+          "example": "4096 16384 4194304"
+        },
+        "/proc/sys/net/core/rmem_default": {
+          "description": "Default receive buffer size",
+          "type": "integer",
+          "example": "262144"
+        },
+        "/proc/sys/net/core/rmem_max": {
+          "description": "Maximum receive buffer size",
+          "type": "integer",
+          "example": "8388608"
+        },
+        "/proc/sys/net/core/wmem_default": {
+          "description": "Default send buffer size",
+          "type": "integer",
+          "example": "262144"
+        },
+        "/proc/sys/net/core/wmem_max": {
+          "description": "Maximum send buffer size",
+          "type": "integer",
+          "example": "8388608"
+        },
+        "/proc/sys/net/core/netdev_max_backlog": {
+          "description": "Maximum network device backlog",
+          "type": "integer",
+          "example": "5000"
+        },
+        "/proc/sys/net/ipv4/ip_local_port_range": {
+          "description": "Local port range for outgoing connections",
+          "type": "string",
+          "example": "32768 60999"
+        },
+        "/proc/sys/net/ipv4/conf/all/rp_filter": {
+          "description": "Reverse path filtering",
+          "type": "integer",
+          "example": "1"
+        },
+        "/proc/sys/net/ipv4/conf/all/accept_source_route": {
+          "description": "Accept source routed packets",
+          "type": "boolean",
+          "example": "0"
+        },
+        "/proc/sys/net/ipv4/icmp_echo_ignore_all": {
+          "description": "Ignore all ICMP echo requests",
+          "type": "boolean",
+          "example": "0"
+        },
+        "/proc/sys/net/ipv4/icmp_echo_ignore_broadcasts": {
+          "description": "Ignore broadcast ICMP echo requests",
+          "type": "boolean",
+          "example": "1"
+        },
+        "/proc/sys/net/ipv6/conf/all/disable_ipv6": {
+          "description": "Disable IPv6 on all interfaces",
+          "type": "boolean",
+          "example": "0"
+        },
+        "/proc/sys/net/ipv6/conf/all/forwarding": {
+          "description": "Enable IPv6 forwarding",
+          "type": "boolean",
+          "example": "0"
+        },
+        "/proc/sys/net/ipv6/conf/all/accept_ra": {
+          "description": "Accept router advertisements",
+          "type": "integer",
+          "example": "1"
+        }
+      }
+    },
+    "network_interface_paths": {
+      "interface_files": {
+        "/sys/class/net/wlan0/address": {
+          "description": "WiFi MAC address",
+          "type": "string",
+          "example": "00:11:22:33:44:55"
+        },
+        "/sys/class/net/wlan0/operstate": {
+          "description": "WiFi operational state",
+          "type": "string",
+          "example": "up"
+        },
+        "/sys/class/net/wlan0/mtu": {
+          "description": "WiFi MTU size",
+          "type": "integer",
+          "example": "1500"
+        },
+        "/sys/class/net/rmnet0/address": {
+          "description": "Mobile data MAC address",
+          "type": "string",
+          "example": "00:00:00:00:00:00"
+        },
+        "/sys/class/net/rmnet0/operstate": {
+          "description": "Mobile data operational state",
+          "type": "string",
+          "example": "unknown"
+        }
+      }
+    },
+    "android_specific": {
+      "settings": {
+        "settings.global.airplane_mode_on": {
+          "description": "Airplane mode setting (Android Settings)",
+          "type": "boolean",
+          "example": "0"
+        },
+        "settings.global.wifi_on": {
+          "description": "WiFi enabled setting (Android Settings)",
+          "type": "boolean",
+          "example": "1"
+        },
+        "settings.global.mobile_data": {
+          "description": "Mobile data enabled setting (Android Settings)",
+          "type": "boolean",
+          "example": "1"
+        },
+        "settings.global.data_roaming": {
+          "description": "Data roaming enabled setting (Android Settings)",
+          "type": "boolean",
+          "example": "0"
+        },
+        "settings.global.wifi_sleep_policy": {
+          "description": "WiFi sleep policy",
+          "type": "integer",
+          "example": "2"
+        },
+        "settings.global.wifi_device_owner_configs_lockdown": {
+          "description": "WiFi config lockdown by device owner",
+          "type": "boolean",
+          "example": "0"
+        },
+        "settings.global.http_proxy": {
+          "description": "Global HTTP proxy (Android Settings)",
+          "type": "string",
+          "example": "proxy.example.com:8080"
+        },
+        "settings.global.network_preference": {
+          "description": "Preferred network type",
+          "type": "integer",
+          "example": "1"
+        }
+      }
+    }
+  },
+  "notes": {
+    "interface_naming": "Interface names may vary by device: wlan0, wlan1 (WiFi), rmnet0, rmnet_data0 (mobile), eth0 (ethernet), p2p0 (WiFi Direct), bt-pan (Bluetooth PAN)",
+    "property_access": "System properties can be read using 'getprop' command or android.os.SystemProperties API",
+    "persistence": "Properties prefixed with 'persist.' are persisted across reboots",
+    "readonly": "Properties prefixed with 'ro.' are read-only and set at boot time",
+    "security": "Many network properties require system or root permissions to read or modify"
+  }
+}
