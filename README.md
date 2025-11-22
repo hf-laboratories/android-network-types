@@ -15,6 +15,8 @@ This repository documents Android networking configuration keys including:
 
 - **[NETWORK_KEYS.md](NETWORK_KEYS.md)** - Human-readable documentation with tables and usage examples
 - **[android-network-keys.json](android-network-keys.json)** - Machine-readable JSON format
+- **[apply-network-defaults.sh](apply-network-defaults.sh)** - Shell script to apply default network settings
+- **[SCRIPT_README.md](SCRIPT_README.md)** - Documentation for the network configuration script
 
 ## Quick Start
 
@@ -41,6 +43,23 @@ adb shell cat /proc/sys/net/ipv4/ip_forward
 adb shell ls -la /proc/sys/net/
 ```
 
+### Applying Network Defaults
+
+```bash
+# Apply default network settings (requires root)
+adb push apply-network-defaults.sh /data/local/tmp/
+adb push android-network-keys.json /data/local/tmp/
+adb shell
+su
+cd /data/local/tmp
+./apply-network-defaults.sh -v
+
+# Dry-run mode to preview changes
+./apply-network-defaults.sh -d -v
+```
+
+For detailed usage of the configuration script, see [SCRIPT_README.md](SCRIPT_README.md).
+
 ## Categories
 
 The collection is organized into the following categories:
@@ -66,7 +85,8 @@ The collection is organized into the following categories:
 - **Device development** - Configuring network settings for custom Android builds
 - **Testing** - Simulating different network conditions
 - **Documentation** - Reference for Android networking internals
-- **Automation** - Scripting network configuration changes
+- **Automation** - Scripting network configuration changes using `apply-network-defaults.sh`
+- **Configuration Management** - Apply consistent network defaults across multiple devices
 
 ## Contributing
 
