@@ -404,7 +404,7 @@
           "description": "Comma-separated list of hosts to bypass proxy",
           "type": "string",
           "example": "localhost,127.0.0.1,.local",
-          "default": "localhost,127.0.0.1"
+          "default": "localhost,127.0.0.1,.local"
         },
         "all_proxy": {
           "description": "Proxy for all protocols",
