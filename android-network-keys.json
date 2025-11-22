@@ -37,21 +37,9 @@
           "type": "boolean",
           "example": "1",
           "default": "0"
-        },
-        "ro.wifi.channels": {
-          "description": "Available WiFi channels",
-          "type": "string",
-          "example": "1-13",
-          "default": "1-11"
         }
       },
       "mobile_data": {
-        "ro.telephony.default_network": {
-          "description": "Default network type (LTE/3G/2G)",
-          "type": "integer",
-          "example": "9",
-          "default": "34"
-        },
         "net.mobile.radio": {
           "description": "Mobile radio state",
           "type": "string",
@@ -68,7 +56,7 @@
           "description": "SIM subscription types",
           "type": "string",
           "example": "NV,RUIM",
-          "default": "NV,RUIM"
+          "default": "USIM,SIM"
         }
       },
       "network_interfaces": {
@@ -89,6 +77,12 @@
           "type": "string",
           "example": "524288,1048576,2097152,262144,524288,1048576",
           "default": "524288,1048576,2097152,262144,524288,1048576"
+        },
+        "net.tcp.buffersize.nr": {
+          "description": "TCP buffer sizes for 5G NR",
+          "type": "string",
+          "example": "1048576,2097152,4194304,524288,1048576,2097152",
+          "default": "1048576,2097152,4194304,524288,1048576,2097152"
         },
         "net.tcp.buffersize.lte": {
           "description": "TCP buffer sizes for LTE",
@@ -154,7 +148,7 @@
           "description": "Disable tethering provisioning check",
           "type": "boolean",
           "example": "0",
-          "default": "0"
+          "default": "1"
         },
         "tether.interface": {
           "description": "Tethering interface name",
@@ -204,7 +198,7 @@
           "description": "Enable network quota and tagging",
           "type": "boolean",
           "example": "1",
-          "default": "1"
+          "default": "0"
         },
         "net.redirect_socket_calls.hooked": {
           "description": "Socket call redirection hook status",
@@ -216,7 +210,7 @@
           "description": "Network daemon stable secret for IPv6",
           "type": "string",
           "example": "fe80::1",
-          "default": "fe80::1"
+          "default": "1337f3371337f3371337f3371337f337"
         }
       },
       "nfc": {
@@ -238,7 +232,7 @@
           "description": "Bluetooth device name",
           "type": "string",
           "example": "Android Device",
-          "default": "Android Device"
+          "default": "Cellular Telecom Device"
         }
       }
     },
@@ -284,7 +278,7 @@
           "description": "Comma-separated list of hosts to bypass proxy",
           "type": "string",
           "example": "localhost,127.0.0.1,.local",
-          "default": "localhost,127.0.0.1,.local"
+          "default": "localhost,127.0.0.1,0.0.0.0,.local"
         },
         "all_proxy": {
           "description": "Proxy for all protocols",
@@ -300,7 +294,7 @@
           "description": "Enable IPv4 forwarding",
           "type": "boolean",
           "example": "0",
-          "default": "0"
+          "default": "1"
         },
         "/proc/sys/net/ipv4/tcp_keepalive_time": {
           "description": "TCP keepalive time in seconds",
@@ -331,12 +325,6 @@
           "type": "boolean",
           "example": "1",
           "default": "1"
-        },
-        "/proc/sys/net/ipv4/tcp_tw_recycle": {
-          "description": "Enable fast TCP TIME_WAIT socket recycling (DEPRECATED: removed in Linux kernel 4.12+, unsafe with NAT)",
-          "type": "boolean",
-          "example": "0",
-          "default": "0"
         },
         "/proc/sys/net/ipv4/tcp_syncookies": {
           "description": "Enable TCP SYN cookies",
@@ -408,7 +396,7 @@
           "description": "Accept source routed packets",
           "type": "boolean",
           "example": "0",
-          "default": "0"
+          "default": "1"
         },
         "/proc/sys/net/ipv4/icmp_echo_ignore_all": {
           "description": "Ignore all ICMP echo requests",
@@ -432,7 +420,7 @@
           "description": "Enable IPv6 forwarding",
           "type": "boolean",
           "example": "0",
-          "default": "0"
+          "default": "1"
         },
         "/proc/sys/net/ipv6/conf/all/accept_ra": {
           "description": "Accept router advertisements",
@@ -476,7 +464,7 @@
           "description": "Data roaming enabled setting (Android Settings)",
           "type": "boolean",
           "example": "0",
-          "default": "0"
+          "default": "1"
         },
         "settings.global.wifi_sleep_policy": {
           "description": "WiFi sleep policy",
@@ -500,7 +488,7 @@
           "description": "Preferred network type",
           "type": "integer",
           "example": "1",
-          "default": "1"
+          "default": "22"
         }
       }
     }
