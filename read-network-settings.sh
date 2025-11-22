@@ -193,7 +193,7 @@ read_kernel_parameter() {
 read_environment_variable() {
     local key="$1"
     
-    eval "echo \"\$$key\""
+    printenv "$key" 2>/dev/null || echo ""
 }
 
 # Read Android settings using settings command
@@ -215,6 +215,12 @@ read_android_setting() {
 
 # JSON output globals
 JSON_FIRST_ITEM=1
+
+# Escape special characters for JSON strings
+escape_json_string() {
+    local str="$1"
+    echo "$str" | sed 's/\\/\\\\/g; s/"/\\"/g; s/\t/\\t/g; s/\r/\\r/g; s/\n/\\n/g'
+}
 
 # Initialize JSON output
 init_json_output() {
@@ -261,10 +267,10 @@ add_json_property() {
         echo ","
     fi
     
-    # Escape special characters in JSON strings
-    value=$(echo "$value" | sed 's/\\/\\\\/g; s/"/\\"/g; s/\t/\\t/g; s/\r/\\r/g; s/\n/\\n/g')
-    default=$(echo "$default" | sed 's/\\/\\\\/g; s/"/\\"/g; s/\t/\\t/g; s/\r/\\r/g; s/\n/\\n/g')
-    description=$(echo "$description" | sed 's/\\/\\\\/g; s/"/\\"/g; s/\t/\\t/g; s/\r/\\r/g; s/\n/\\n/g')
+    # Escape special characters in JSON strings using helper function
+    value=$(escape_json_string "$value")
+    default=$(escape_json_string "$default")
+    description=$(escape_json_string "$description")
     
     printf "      \"%s\": {" "$key"
     printf " \"current\": \"%s\", \"default\": \"%s\", \"description\": \"%s\"" "$value" "$default" "$description"
@@ -303,16 +309,18 @@ print_table_row() {
     local value="$2"
     local default="$3"
     
-    # Truncate long values for display
+    # Truncate long values for display using POSIX-compliant method
     local display_value="$value"
     local display_default="$default"
     
+    # Use cut to truncate if longer than 50 characters
     if [ ${#display_value} -gt 50 ]; then
-        display_value="${value:0:47}..."
+        display_value="$(echo "$value" | cut -c1-47)..."
     fi
     
+    # Use cut to truncate if longer than 30 characters
     if [ ${#display_default} -gt 30 ]; then
-        display_default="${default:0:27}..."
+        display_default="$(echo "$default" | cut -c1-27)..."
     fi
     
     if [ "$COMPARE_DEFAULTS" -eq 1 ]; then
