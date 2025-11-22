@@ -21,13 +21,22 @@
 #   - jq or compatible JSON parser
 #   - Android system with standard networking tools
 
-set -e  # Exit on error
-
 # Default values
 CONFIG_FILE="android-network-keys.json"
 VERBOSE=0
 DRY_RUN=0
-SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
+
+# Get script directory in a portable way
+if command -v readlink >/dev/null 2>&1 && readlink -f "$0" >/dev/null 2>&1; then
+    # GNU readlink with -f flag
+    SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
+elif [ -n "$BASH_SOURCE" ]; then
+    # Bash-specific
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+else
+    # Fallback for POSIX sh
+    SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+fi
 
 # Color codes for output
 RED='\033[0;31m'
@@ -363,11 +372,20 @@ process_android_settings() {
             if [ -n "$default_value" ] && [ "$default_value" != "null" ]; then
                 local description=$(jq -r ".categories.android_specific.$category.\"$setting_key\".description // \"No description\"" "$CONFIG_FILE" 2>/dev/null)
                 
-                # Extract namespace and key from setting_key (format: settings.namespace.key)
-                local namespace=$(echo "$setting_key" | cut -d'.' -f2)
-                local key=$(echo "$setting_key" | cut -d'.' -f3-)
-                
-                apply_android_setting "$namespace" "$key" "$default_value" "$description"
+                # Validate and extract namespace and key from setting_key (format: settings.namespace.key)
+                if echo "$setting_key" | grep -q "^settings\\."; then
+                    local namespace=$(echo "$setting_key" | cut -d'.' -f2)
+                    local key=$(echo "$setting_key" | cut -d'.' -f3-)
+                    
+                    # Validate that we have both namespace and key
+                    if [ -n "$namespace" ] && [ -n "$key" ]; then
+                        apply_android_setting "$namespace" "$key" "$default_value" "$description"
+                    else
+                        log_warn "Invalid Android setting format: $setting_key (expected: settings.namespace.key)"
+                    fi
+                else
+                    log_warn "Skipping non-settings key: $setting_key"
+                fi
             else
                 log_verbose "Skipping Android setting without default value: $setting_key"
             fi
