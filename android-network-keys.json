@@ -372,7 +372,7 @@
         },
         "ANDROID_SOCKET_*": {
           "description": "Socket file descriptor numbers for named sockets (e.g., ANDROID_SOCKET_zygote contains the FD number)",
-          "type": "integer",
+          "type": "string",
           "example": "10",
           "default": ""
         },
