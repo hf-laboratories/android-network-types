@@ -1,5 +1,6 @@
 # android-network-cfg-bulk-setter
 
+```ascii
   ┌──────────────┐
   │  ██  ██████  │
   │  ██  ██      │
@@ -9,7 +10,8 @@
   |──────────────|
   │ Laboratories │
   └──────────────┘
- 
+```
+
 A comprehensive collection of all property and environment configuration keys related to networking on Android Linux.
 
 ## Overview
