@@ -26,6 +26,8 @@ CONFIG_FILE="android-network-keys.json"
 VERBOSE=0
 DRY_RUN=0
 SKIP_CONFIRMATION=0
+BACKUP_DIR="./backups"
+AUTO_BACKUP=1  # Enable automatic backup by default
 
 # Note: SCRIPT_DIR is computed for potential future use (e.g., finding config files relative to script location)
 # Get script directory in a portable way
@@ -97,6 +99,12 @@ Examples:
 
   # Use custom configuration file
   ./apply-network-defaults.sh -f /path/to/config.json
+
+Automatic Backup:
+  - On first run: Creates a "first-run" backup before applying changes
+  - On subsequent runs: Creates a "pre-apply" backup before each application
+  - Backups are stored in ./backups/ directory
+  - Skipped in dry-run mode
 
 Requirements:
   - Root/system permissions
@@ -198,6 +206,61 @@ confirm_changes() {
             exit 0
             ;;
     esac
+}
+
+# Create automatic backup before applying changes
+create_auto_backup() {
+    # Skip backup in dry-run mode
+    if [ "$DRY_RUN" -eq 1 ]; then
+        log_verbose "Skipping backup in dry-run mode"
+        return 0
+    fi
+    
+    # Check if backup script is available
+    if [ ! -f "$SCRIPT_DIR/backup-network-settings.sh" ]; then
+        log_warn "backup-network-settings.sh not found, skipping automatic backup"
+        return 1
+    fi
+    
+    log_info "Creating automatic backup before applying changes..."
+    
+    # Check if this is first run (no backups directory or empty)
+    local backup_type=""
+    local backup_desc=""
+    
+    if [ ! -d "$BACKUP_DIR" ] || [ -z "$(ls -A "$BACKUP_DIR" 2>/dev/null)" ]; then
+        backup_type="first-run"
+        backup_desc="Automatic backup on first run"
+        log_info "First run detected - creating initial backup"
+    else
+        backup_type="pre-apply"
+        backup_desc="Automatic backup before applying defaults"
+        log_verbose "Creating backup before applying changes"
+    fi
+    
+    # Create backup using backup script
+    local backup_output
+    if [ "$VERBOSE" -eq 1 ]; then
+        backup_output=$(sh "$SCRIPT_DIR/backup-network-settings.sh" -n "$backup_type" -d "$backup_desc" -o "$BACKUP_DIR" -v 2>&1)
+    else
+        backup_output=$(sh "$SCRIPT_DIR/backup-network-settings.sh" -n "$backup_type" -d "$backup_desc" -o "$BACKUP_DIR" 2>&1)
+    fi
+    
+    local backup_status=$?
+    
+    if [ $backup_status -eq 0 ]; then
+        log_info "Backup created successfully"
+        if [ "$VERBOSE" -eq 1 ]; then
+            echo "$backup_output" | grep "Backup saved to:" || true
+        fi
+    else
+        log_warn "Backup failed, but continuing with apply operation"
+        if [ "$VERBOSE" -eq 1 ]; then
+            echo "$backup_output"
+        fi
+    fi
+    
+    echo ""
 }
 
 # Apply system property using setprop
@@ -504,6 +567,9 @@ main() {
     
     # Ask for confirmation before applying changes
     confirm_changes
+    
+    # Create automatic backup before applying changes
+    create_auto_backup
     
     echo ""
     
