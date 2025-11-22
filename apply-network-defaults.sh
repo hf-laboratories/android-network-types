@@ -25,6 +25,7 @@
 CONFIG_FILE="android-network-keys.json"
 VERBOSE=0
 DRY_RUN=0
+SKIP_CONFIRMATION=0
 
 # Note: SCRIPT_DIR is computed for potential future use (e.g., finding config files relative to script location)
 # Get script directory in a portable way
@@ -84,6 +85,7 @@ Options:
   -f, --file <path>     Path to JSON configuration file (default: android-network-keys.json)
   -v, --verbose         Enable verbose output
   -d, --dry-run         Show what would be applied without making changes
+  -y, --yes             Skip confirmation prompt and apply changes immediately
   -h, --help            Display this help message
 
 Examples:
@@ -120,6 +122,10 @@ parse_args() {
                 DRY_RUN=1
                 shift
                 ;;
+            -y|--yes)
+                SKIP_CONFIRMATION=1
+                shift
+                ;;
             -h|--help)
                 print_help
                 exit 0
@@ -153,7 +159,7 @@ check_requirements() {
     fi
     
     if [ -n "$missing_tools" ]; then
-        log_error "Required tools not found:$missing_tools"
+        log_error "Required tools not found: $missing_tools"
         log_error "These tools are needed for JSON parsing and should be available on Android by default."
         exit 1
     fi
@@ -165,6 +171,33 @@ check_requirements() {
     fi
     
     log_verbose "All requirements satisfied"
+}
+
+# Ask for user confirmation before applying changes
+confirm_changes() {
+    # Skip confirmation if in dry-run mode or -y flag was used
+    if [ "$DRY_RUN" -eq 1 ] || [ "$SKIP_CONFIRMATION" -eq 1 ]; then
+        return 0
+    fi
+    
+    echo ""
+    printf "${YELLOW}WARNING:${NC} This will apply default network settings to your system.\n"
+    printf "This may change your current network configuration.\n"
+    echo ""
+    printf "Are you sure you want to continue? (yes/no): "
+    
+    read -r response
+    
+    case "$response" in
+        [Yy]|[Yy][Ee][Ss])
+            log_info "Proceeding with configuration changes..."
+            return 0
+            ;;
+        *)
+            log_info "Operation cancelled by user."
+            exit 0
+            ;;
+    esac
 }
 
 # Apply system property using setprop
@@ -466,6 +499,11 @@ main() {
     
     # Check requirements
     check_requirements
+    
+    echo ""
+    
+    # Ask for confirmation before applying changes
+    confirm_changes
     
     echo ""
     

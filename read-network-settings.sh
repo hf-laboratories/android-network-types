@@ -176,7 +176,7 @@ check_requirements() {
     fi
     
     if [ -n "$missing_tools" ]; then
-        log_error "Required tools not found:$missing_tools"
+        log_error "Required tools not found: $missing_tools"
         log_error "These tools are needed for JSON parsing and should be available on Android by default."
         exit 1
     fi

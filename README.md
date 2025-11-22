@@ -27,8 +27,9 @@ This repository documents Android networking configuration keys including:
 ### Reading Current Network Settings
 
 ```bash
-# Read all current network settings
+# Read ALL current network settings (default action)
 adb push read-network-settings.sh /data/local/tmp/
+adb push json-parser.sh /data/local/tmp/
 adb push android-network-keys.json /data/local/tmp/
 adb shell
 cd /data/local/tmp
@@ -75,16 +76,23 @@ adb shell ls -la /proc/sys/net/
 ### Applying Network Defaults
 
 ```bash
-# Apply default network settings (requires root)
+# Apply default settings to ALL network configurations (requires root, will prompt for confirmation)
 adb push apply-network-defaults.sh /data/local/tmp/
+adb push json-parser.sh /data/local/tmp/
 adb push android-network-keys.json /data/local/tmp/
 adb shell
 su
 cd /data/local/tmp
-./apply-network-defaults.sh -v
+./apply-network-defaults.sh
 
-# Dry-run mode to preview changes
-./apply-network-defaults.sh -d -v
+# Skip confirmation prompt
+./apply-network-defaults.sh -y
+
+# Dry-run mode to preview changes (no confirmation needed)
+./apply-network-defaults.sh -d
+
+# Verbose output with confirmation skip
+./apply-network-defaults.sh -y -v
 ```
 
 For detailed usage of the configuration script, see [SCRIPT_README.md](SCRIPT_README.md).

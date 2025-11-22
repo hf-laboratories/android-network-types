@@ -43,17 +43,20 @@
 ### Basic Usage
 
 ```bash
-# Apply defaults (requires root permissions)
+# Apply defaults (requires root permissions, will prompt for confirmation)
 ./apply-network-defaults.sh
 
-# Dry-run mode (preview without applying)
+# Skip confirmation prompt
+./apply-network-defaults.sh -y
+
+# Dry-run mode (preview without applying, no confirmation needed)
 ./apply-network-defaults.sh -d
 
 # Verbose output
 ./apply-network-defaults.sh -v
 
 # Combine options
-./apply-network-defaults.sh -d -v
+./apply-network-defaults.sh -y -v
 ```
 
 ### Using a Custom Configuration File
@@ -68,7 +71,8 @@
 |--------|-------------|
 | `-f, --file <path>` | Path to JSON configuration file (default: `android-network-keys.json`) |
 | `-v, --verbose` | Enable verbose output showing all operations |
-| `-d, --dry-run` | Show what would be applied without making changes |
+| `-d, --dry-run` | Show what would be applied without making changes (skips confirmation) |
+| `-y, --yes` | Skip confirmation prompt and apply changes immediately |
 | `-h, --help` | Display help message |
 
 ## Configuration File Format
