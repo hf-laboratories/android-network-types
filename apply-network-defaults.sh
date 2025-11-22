@@ -253,8 +253,7 @@ create_auto_backup() {
     local backup_desc=""
     
     # Generate timestamp for unique backup name
-    local backup_timestamp
-    backup_timestamp="$(date '+%Y%m%d_%H%M%S')"
+    local backup_timestamp="$(date '+%Y%m%d_%H%M%S')"
     
     if [ ! -d "$BACKUP_DIR" ] || [ -z "$(ls -A "$BACKUP_DIR" 2>/dev/null)" ]; then
         backup_type="first-run-${backup_timestamp}"
