@@ -26,6 +26,7 @@ CONFIG_FILE="android-network-keys.json"
 VERBOSE=0
 DRY_RUN=0
 
+# Note: SCRIPT_DIR is computed for potential future use (e.g., finding config files relative to script location)
 # Get script directory in a portable way
 if command -v readlink >/dev/null 2>&1 && readlink -f "$0" >/dev/null 2>&1; then
     # GNU readlink with -f flag
@@ -192,9 +193,12 @@ apply_kernel_parameter() {
         /proc/sys/*)
             local sysctl_key=$(echo "$path" | sed 's|^/proc/sys/||' | tr '/' '.')
             if command -v sysctl >/dev/null 2>&1; then
-                if sysctl -w "${sysctl_key}=${value}" >/dev/null 2>&1; then
+                local sysctl_error=$(sysctl -w "${sysctl_key}=${value}" 2>&1)
+                if [ $? -eq 0 ]; then
                     log_verbose "Successfully set kernel parameter via sysctl: $path"
                     return 0
+                else
+                    log_verbose "sysctl failed for $path: $sysctl_error"
                 fi
             fi
             ;;
@@ -377,6 +381,8 @@ process_android_settings() {
                 case "$setting_key" in
                     settings.*.*)
                         # Valid format: settings.namespace.key
+                        # Note: The key part (f3-) may contain underscores or additional characters
+                        # but should not contain dots (Android settings keys use underscores)
                         local namespace=$(echo "$setting_key" | cut -d'.' -f2)
                         local key=$(echo "$setting_key" | cut -d'.' -f3-)
                         

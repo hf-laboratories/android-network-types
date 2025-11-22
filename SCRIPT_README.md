@@ -275,8 +275,8 @@ EOF
 
 Install jq:
 ```bash
-# Debian/Ubuntu
-apt-get install jq
+# Debian/Ubuntu (requires root/sudo)
+sudo apt-get install jq
 
 # Android with Termux
 pkg install jq
