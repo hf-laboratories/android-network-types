@@ -48,18 +48,16 @@ The collection is organized into the following categories:
 
 1. **WiFi** - WiFi interface properties and configuration
 2. **Mobile Data** - Cellular network properties (GSM, LTE, etc.)
-3. **DNS** - DNS server configuration
-4. **Network Interfaces** - Interface-specific settings and TCP buffer sizes
-5. **Proxy** - HTTP/HTTPS proxy configuration
-6. **VPN** - VPN-related properties
-7. **Tethering** - USB/WiFi/Bluetooth tethering
-8. **IPv6** - IPv6 configuration and settings
-9. **DHCP** - DHCP client configuration
-10. **Radio** - Radio interface layer (RIL) properties
-11. **Connectivity** - General connectivity settings
-12. **Routing** - Network routing configuration
-13. **Kernel Parameters** - Linux kernel networking parameters
-14. **Android Settings** - Android Settings database entries
+3. **Network Interfaces** - Interface-specific settings and TCP buffer sizes
+4. **Proxy** - HTTP/HTTPS proxy configuration
+5. **VPN** - VPN-related properties
+6. **Tethering** - USB/WiFi/Bluetooth tethering
+7. **IPv6** - IPv6 configuration and settings
+8. **DHCP** - DHCP client configuration
+9. **Radio** - Radio interface layer (RIL) properties
+10. **Connectivity** - General connectivity settings
+11. **Kernel Parameters** - Linux kernel networking parameters
+12. **Android Settings** - Android Settings database entries
 
 ## Use Cases
 

@@ -54,85 +54,11 @@
           "example": "true",
           "default": "true"
         },
-        "gsm.operator.alpha": {
-          "description": "Mobile operator name",
-          "type": "string",
-          "example": "US Mobile",
-          "default": "US Mobile"
-        },
-        "gsm.operator.numeric": {
-          "description": "Mobile country code + mobile network code",
-          "type": "string",
-          "example": "310410",
-          "default": "310410"
-        },
-        "gsm.operator.iso-country": {
-          "description": "ISO country code for operator",
-          "type": "string",
-          "example": "us",
-          "default": "us"
-        },
-        "gsm.network.type": {
-          "description": "Current network type",
-          "type": "string",
-          "example": "LTE",
-          "default": "LTE"
-        },
         "ril.subscription.types": {
           "description": "SIM subscription types",
           "type": "string",
           "example": "NV,RUIM",
           "default": "NV,RUIM"
-        }
-      },
-      "dns": {
-        "net.dns1": {
-          "description": "Primary DNS server",
-          "type": "string",
-          "example": "8.8.8.8",
-          "default": ""
-        },
-        "net.dns2": {
-          "description": "Secondary DNS server",
-          "type": "string",
-          "example": "8.8.4.4",
-          "default": ""
-        },
-        "net.dns3": {
-          "description": "Tertiary DNS server",
-          "type": "string",
-          "example": "1.1.1.1",
-          "default": ""
-        },
-        "net.dns4": {
-          "description": "Quaternary DNS server",
-          "type": "string",
-          "example": "1.0.0.1",
-          "default": ""
-        },
-        "net.rmnet0.dns1": {
-          "description": "Primary DNS for rmnet0 interface",
-          "type": "string",
-          "example": "8.8.8.8",
-          "default": ""
-        },
-        "net.rmnet0.dns2": {
-          "description": "Secondary DNS for rmnet0 interface",
-          "type": "string",
-          "example": "8.8.4.4",
-          "default": ""
-        },
-        "dhcp.wlan0.dns1": {
-          "description": "Primary DNS from DHCP for wlan0",
-          "type": "string",
-          "example": "192.168.1.1",
-          "default": ""
-        },
-        "dhcp.wlan0.dns2": {
-          "description": "Secondary DNS from DHCP for wlan0",
-          "type": "string",
-          "example": "192.168.1.254",
-          "default": ""
         }
       },
       "network_interfaces": {
@@ -141,12 +67,6 @@
           "type": "string",
           "example": "android-device",
           "default": "localhost"
-        },
-        "net.change": {
-          "description": "Network change counter",
-          "type": "integer",
-          "example": "1",
-          "default": "1"
         },
         "net.tcp.buffersize.default": {
           "description": "Default TCP buffer sizes",
@@ -248,50 +168,14 @@
         }
       },
       "dhcp": {
-        "dhcp.wlan0.result": {
-          "description": "DHCP result for wlan0",
-          "type": "string",
-          "example": "ok",
-          "default": ""
-        },
-        "dhcp.wlan0.ipaddress": {
-          "description": "IP address from DHCP for wlan0",
-          "type": "string",
-          "example": "192.168.1.100",
-          "default": ""
-        },
-        "dhcp.wlan0.gateway": {
-          "description": "Gateway from DHCP for wlan0",
-          "type": "string",
-          "example": "192.168.1.1",
-          "default": ""
-        },
-        "dhcp.wlan0.mask": {
-          "description": "Netmask from DHCP for wlan0",
-          "type": "string",
-          "example": "255.255.255.0",
-          "default": ""
-        },
         "dhcp.wlan0.leasetime": {
           "description": "DHCP lease time for wlan0",
           "type": "integer",
           "example": "3600",
           "default": "3600"
-        },
-        "dhcp.wlan0.server": {
-          "description": "DHCP server for wlan0",
-          "type": "string",
-          "example": "192.168.1.1",
-          "default": ""
         }
       },
       "radio": {
-        "ril.radio.state": {
-          "description": "Radio state (on/off)",
-          "type": "string",
-          "example": "on",
-          "default": "on"
-        },
         "persist.radio.apm_sim_not_pwdn": {
           "description": "Keep SIM powered in airplane mode",
           "type": "boolean",
@@ -323,20 +207,6 @@
           "type": "string",
           "example": "fe80::1",
           "default": "fe80::1"
-        }
-      },
-      "routing": {
-        "net.rmnet0.gw": {
-          "description": "Gateway for rmnet0 interface",
-          "type": "string",
-          "example": "10.0.0.1",
-          "default": ""
-        },
-        "net.wlan0.gw": {
-          "description": "Gateway for wlan0 interface",
-          "type": "string",
-          "example": "192.168.1.1",
-          "default": ""
         }
       },
       "nfc": {
@@ -564,35 +434,11 @@
     },
     "network_interface_paths": {
       "interface_files": {
-        "/sys/class/net/wlan0/address": {
-          "description": "WiFi MAC address",
-          "type": "string",
-          "example": "00:11:22:33:44:55",
-          "default": ""
-        },
-        "/sys/class/net/wlan0/operstate": {
-          "description": "WiFi operational state",
-          "type": "string",
-          "example": "up",
-          "default": "down"
-        },
         "/sys/class/net/wlan0/mtu": {
           "description": "WiFi MTU size",
           "type": "integer",
           "example": "1500",
           "default": "1500"
-        },
-        "/sys/class/net/rmnet0/address": {
-          "description": "Mobile data MAC address",
-          "type": "string",
-          "example": "00:00:00:00:00:00",
-          "default": ""
-        },
-        "/sys/class/net/rmnet0/operstate": {
-          "description": "Mobile data operational state",
-          "type": "string",
-          "example": "unknown",
-          "default": "unknown"
         }
       }
     },

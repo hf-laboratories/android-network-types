@@ -7,7 +7,6 @@ A comprehensive collection of property keys, environment variables, and configur
 - [System Properties](#system-properties)
   - [WiFi](#wifi)
   - [Mobile Data](#mobile-data)
-  - [DNS](#dns)
   - [Network Interfaces](#network-interfaces)
   - [Proxy](#proxy)
   - [VPN](#vpn)
@@ -16,7 +15,6 @@ A comprehensive collection of property keys, environment variables, and configur
   - [DHCP](#dhcp)
   - [Radio](#radio)
   - [Connectivity](#connectivity)
-  - [Routing](#routing)
   - [NFC](#nfc)
   - [Bluetooth](#bluetooth)
 - [Environment Variables](#environment-variables)
@@ -65,31 +63,13 @@ System properties can be accessed using the `getprop` command or the `android.os
 | `ro.telephony.default_network` | Default network type (LTE/3G/2G) | integer | `9` |
 | `net.mobile.radio` | Mobile radio state | string | `on` |
 | `net.lte.ims.data.enabled` | LTE IMS data enabled status | boolean | `true` |
-| `gsm.operator.alpha` | Mobile operator name | string | `T-Mobile` |
-| `gsm.operator.numeric` | Mobile country code + mobile network code | string | `310260` |
-| `gsm.operator.iso-country` | ISO country code for operator | string | `us` |
-| `gsm.network.type` | Current network type | string | `LTE` |
 | `ril.subscription.types` | SIM subscription types | string | `NV,RUIM` |
-
-### DNS
-
-| Property | Description | Type | Example |
-|----------|-------------|------|---------|
-| `net.dns1` | Primary DNS server | string | `8.8.8.8` |
-| `net.dns2` | Secondary DNS server | string | `8.8.4.4` |
-| `net.dns3` | Tertiary DNS server | string | `1.1.1.1` |
-| `net.dns4` | Quaternary DNS server | string | `1.0.0.1` |
-| `net.rmnet0.dns1` | Primary DNS for rmnet0 interface | string | `8.8.8.8` |
-| `net.rmnet0.dns2` | Secondary DNS for rmnet0 interface | string | `8.8.4.4` |
-| `dhcp.wlan0.dns1` | Primary DNS from DHCP for wlan0 | string | `192.168.1.1` |
-| `dhcp.wlan0.dns2` | Secondary DNS from DHCP for wlan0 | string | `192.168.1.254` |
 
 ### Network Interfaces
 
 | Property | Description | Type | Example |
 |----------|-------------|------|---------|
 | `net.hostname` | Device hostname | string | `android-device` |
-| `net.change` | Network change counter | integer | `1` |
 | `net.tcp.buffersize.default` | Default TCP buffer sizes | string | `4096,87380,110208,4096,16384,110208` |
 | `net.tcp.buffersize.wifi` | TCP buffer sizes for WiFi | string | `524288,1048576,2097152,262144,524288,1048576` |
 | `net.tcp.buffersize.lte` | TCP buffer sizes for LTE | string | `524288,1048576,2097152,262144,524288,1048576` |
@@ -130,18 +110,12 @@ System properties can be accessed using the `getprop` command or the `android.os
 
 | Property | Description | Type | Example |
 |----------|-------------|------|---------|
-| `dhcp.wlan0.result` | DHCP result for wlan0 | string | `ok` |
-| `dhcp.wlan0.ipaddress` | IP address from DHCP for wlan0 | string | `192.168.1.100` |
-| `dhcp.wlan0.gateway` | Gateway from DHCP for wlan0 | string | `192.168.1.1` |
-| `dhcp.wlan0.mask` | Netmask from DHCP for wlan0 | string | `255.255.255.0` |
 | `dhcp.wlan0.leasetime` | DHCP lease time for wlan0 | integer | `3600` |
-| `dhcp.wlan0.server` | DHCP server for wlan0 | string | `192.168.1.1` |
 
 ### Radio
 
 | Property | Description | Type | Example |
 |----------|-------------|------|---------|
-| `ril.radio.state` | Radio state (on/off) | string | `on` |
 | `persist.radio.apm_sim_not_pwdn` | Keep SIM powered in airplane mode | boolean | `1` |
 | `persist.radio.airplane_mode_on` | Airplane mode state | boolean | `0` |
 
@@ -152,13 +126,6 @@ System properties can be accessed using the `getprop` command or the `android.os
 | `net.qtaguid_enabled` | Enable network quota and tagging | boolean | `1` |
 | `net.redirect_socket_calls.hooked` | Socket call redirection hook status | boolean | `true` |
 | `persist.netd.stable_secret` | Network daemon stable secret for IPv6 | string | `fe80::1` |
-
-### Routing
-
-| Property | Description | Type | Example |
-|----------|-------------|------|---------|
-| `net.rmnet0.gw` | Gateway for rmnet0 interface | string | `10.0.0.1` |
-| `net.wlan0.gw` | Gateway for wlan0 interface | string | `192.168.1.1` |
 
 ### NFC
 
@@ -237,11 +204,7 @@ Network interface information available via `/sys/class/net/`:
 
 | File Path | Description | Type | Example |
 |----------|-------------|------|---------|
-| `/sys/class/net/wlan0/address` | WiFi MAC address | string | `00:11:22:33:44:55` |
-| `/sys/class/net/wlan0/operstate` | WiFi operational state | string | `up` |
 | `/sys/class/net/wlan0/mtu` | WiFi MTU size | integer | `1500` |
-| `/sys/class/net/rmnet0/address` | Mobile data MAC address | string | `00:00:00:00:00:00` |
-| `/sys/class/net/rmnet0/operstate` | Mobile data operational state | string | `unknown` |
 
 ## Android Settings
 
