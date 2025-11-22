@@ -14,6 +14,8 @@ This repository documents Android networking configuration keys including:
 
 ## Documentation
 
+### Main Network Utilities
+
 - **[NETWORK_KEYS.md](NETWORK_KEYS.md)** - Human-readable documentation with tables and usage examples
 - **[android-network-keys.json](android-network-keys.json)** - Machine-readable JSON format
 - **[json-parser.sh](json-parser.sh)** - POSIX-compliant JSON parser (no external dependencies)
@@ -24,6 +26,15 @@ This repository documents Android networking configuration keys including:
 - **[backup-network-settings.sh](backup-network-settings.sh)** - Shell script to backup current network settings
 - **[restore-network-settings.sh](restore-network-settings.sh)** - Shell script to restore network settings from backup
 - **[BACKUP_RESTORE_README.md](BACKUP_RESTORE_README.md)** - Documentation for backup and restore scripts
+
+### Generic Configuration Utility (`/alt` directory)
+
+- **[alt/generic-apply-settings.sh](alt/generic-apply-settings.sh)** - Generic utility for applying any system settings
+- **[alt/template-config.json](alt/template-config.json)** - Template showing configuration format
+- **[alt/example-config.json](alt/example-config.json)** - Example configuration file
+- **[alt/README.md](alt/README.md)** - Documentation for the generic utility
+
+The `/alt` directory contains a generic, open-ended configuration utility that works with arbitrary categories and key-value pairs, suitable for any system configuration needs beyond just networking.
 
 ## Quick Start
 
@@ -121,6 +132,26 @@ su
 ```
 
 For detailed usage of backup and restore scripts, see [BACKUP_RESTORE_README.md](BACKUP_RESTORE_README.md).
+
+### Using the Generic Configuration Utility
+
+For applying any system settings beyond networking:
+
+```bash
+# Navigate to alt directory
+cd alt
+
+# Apply generic configuration with dry-run
+./generic-apply-settings.sh -f template-config.json -d -v
+
+# Apply custom configuration
+./generic-apply-settings.sh -f myconfig.json -y
+
+# Apply only specific category
+./generic-apply-settings.sh -f myconfig.json -c system_properties
+```
+
+The generic utility supports open-ended categories and key-value pairs, making it suitable for any system configuration needs. See [alt/README.md](alt/README.md) for details.
 
 ## Categories
 

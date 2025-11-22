@@ -1,0 +1,59 @@
+{
+  "version": "1.0",
+  "description": "Generic configuration template for applying system settings",
+  "categories": {
+    "system_properties": {
+      "description": "Android system properties (set via setprop)",
+      "settings": {
+        "example.property.name": {
+          "value": "example_value",
+          "description": "Description of what this property does"
+        },
+        "persist.example.setting": {
+          "value": "1",
+          "description": "Example persistent setting"
+        }
+      }
+    },
+    "kernel_parameters": {
+      "description": "Linux kernel parameters (set via sysctl or /proc/sys/)",
+      "settings": {
+        "/proc/sys/example/parameter": {
+          "value": "100",
+          "description": "Example kernel parameter"
+        }
+      }
+    },
+    "environment_variables": {
+      "description": "Environment variables (exported to shell)",
+      "settings": {
+        "EXAMPLE_VAR": {
+          "value": "example_value",
+          "description": "Example environment variable"
+        }
+      }
+    },
+    "android_settings": {
+      "description": "Android Settings database entries (set via settings command)",
+      "settings": {
+        "settings.global.example_setting": {
+          "value": "1",
+          "description": "Example Android setting (format: settings.namespace.key)"
+        },
+        "settings.secure.example_secure": {
+          "value": "enabled",
+          "description": "Example secure setting"
+        }
+      }
+    },
+    "custom_commands": {
+      "description": "Custom shell commands to execute",
+      "settings": {
+        "command_1": {
+          "value": "echo 'Example command'",
+          "description": "Example custom command"
+        }
+      }
+    }
+  }
+}

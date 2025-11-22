@@ -1,0 +1,32 @@
+{
+  "version": "1.0",
+  "description": "Example configuration for demonstration",
+  "categories": {
+    "system_properties": {
+      "description": "Example Android system properties",
+      "settings": {
+        "debug.example.enabled": {
+          "value": "1",
+          "description": "Enable example debugging"
+        },
+        "persist.example.timeout": {
+          "value": "30",
+          "description": "Example timeout in seconds"
+        }
+      }
+    },
+    "environment_variables": {
+      "description": "Example environment variables",
+      "settings": {
+        "EXAMPLE_PATH": {
+          "value": "/opt/example",
+          "description": "Example application path"
+        },
+        "EXAMPLE_MODE": {
+          "value": "production",
+          "description": "Example operating mode"
+        }
+      }
+    }
+  }
+}
