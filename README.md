@@ -21,6 +21,9 @@ This repository documents Android networking configuration keys including:
 - **[READ_SCRIPT_README.md](READ_SCRIPT_README.md)** - Documentation for the network settings reader script
 - **[apply-network-defaults.sh](apply-network-defaults.sh)** - Shell script to apply default network settings
 - **[SCRIPT_README.md](SCRIPT_README.md)** - Documentation for the network configuration script
+- **[backup-network-settings.sh](backup-network-settings.sh)** - Shell script to backup current network settings
+- **[restore-network-settings.sh](restore-network-settings.sh)** - Shell script to restore network settings from backup
+- **[BACKUP_RESTORE_README.md](BACKUP_RESTORE_README.md)** - Documentation for backup and restore scripts
 
 ## Quick Start
 
@@ -97,6 +100,28 @@ cd /data/local/tmp
 
 For detailed usage of the configuration script, see [SCRIPT_README.md](SCRIPT_README.md).
 
+### Backup and Restore Network Settings
+
+```bash
+# Create a backup of current network settings
+adb push backup-network-settings.sh /data/local/tmp/
+adb push read-network-settings.sh /data/local/tmp/
+adb push json-parser.sh /data/local/tmp/
+adb push android-network-keys.json /data/local/tmp/
+adb shell
+cd /data/local/tmp
+./backup-network-settings.sh -n "pre-update" -d "Before system update"
+
+# List available backups
+./restore-network-settings.sh -l
+
+# Restore from backup (requires root)
+su
+./restore-network-settings.sh -n "pre-update"
+```
+
+For detailed usage of backup and restore scripts, see [BACKUP_RESTORE_README.md](BACKUP_RESTORE_README.md).
+
 ## Categories
 
 The collection is organized into the following categories:
@@ -117,13 +142,15 @@ The collection is organized into the following categories:
 ## Use Cases
 
 - **Reading current settings** - View and export current network configuration from Android devices
+- **Backup and restore** - Save current network state and restore to previous configurations with metadata tracking
 - **Network debugging** - Understanding current network configuration and comparing against defaults
 - **Device development** - Configuring network settings for custom Android builds
-- **Testing** - Simulating different network conditions and verifying changes
+- **Testing** - Simulating different network conditions and verifying changes, with ability to restore previous state
 - **Documentation** - Reference for Android networking internals
 - **Automation** - Scripting network configuration changes and monitoring
 - **Reset to defaults** - Using provided default values to restore network settings to a known good state
 - **Configuration auditing** - Compare current values against documented defaults to identify deviations
+- **Safe experimentation** - Make changes with confidence knowing you can restore to a known good state
 
 ## Default Values
 
