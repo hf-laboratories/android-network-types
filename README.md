@@ -1,5 +1,15 @@
-# android-network-types
+# android-network-cfg-bulk-setter
 
+  ┌──────────────┐
+  │  ██  ██████  │
+  │  ██  ██      │
+  │  █████████   │
+  │  ██  ██      │
+  │  ██  ██      │
+  |──────────────|
+  │ Laboratories │
+  └──────────────┘
+ 
 A comprehensive collection of all property and environment configuration keys related to networking on Android Linux.
 
 ## Overview
@@ -16,16 +26,23 @@ This repository documents Android networking configuration keys including:
 
 ### Main Network Utilities
 
-- **[NETWORK_KEYS.md](NETWORK_KEYS.md)** - Human-readable documentation with tables and usage examples
-- **[android-network-keys.json](android-network-keys.json)** - Machine-readable JSON format
-- **[json-parser.sh](json-parser.sh)** - POSIX-compliant JSON parser (no external dependencies)
 - **[read-network-settings.sh](read-network-settings.sh)** - Shell script to read current network settings
-- **[READ_SCRIPT_README.md](READ_SCRIPT_README.md)** - Documentation for the network settings reader script
+
+- - **[READ_SCRIPT_README.md](READ_SCRIPT_README.md)** - Documentation for the network settings reader script
+
 - **[apply-network-defaults.sh](apply-network-defaults.sh)** - Shell script to apply default network settings
-- **[SCRIPT_README.md](SCRIPT_README.md)** - Documentation for the network configuration script
+
+- - **[SCRIPT_README.md](SCRIPT_README.md)** - Documentation for the network configuration script
+
 - **[backup-network-settings.sh](backup-network-settings.sh)** - Shell script to backup current network settings
 - **[restore-network-settings.sh](restore-network-settings.sh)** - Shell script to restore network settings from backup
-- **[BACKUP_RESTORE_README.md](BACKUP_RESTORE_README.md)** - Documentation for backup and restore scripts
+
+- - **[BACKUP_RESTORE_README.md](BACKUP_RESTORE_README.md)** - Documentation for backup and restore scripts
+
+- **[json-parser.sh](json-parser.sh)** - POSIX-compliant JSON parser (no external dependencies)
+- **[android-network-keys.json](android-network-keys.json)** - Machine-readable JSON format
+
+- - **[NETWORK_KEYS.md](NETWORK_KEYS.md)** - Human-readable documentation with tables and usage examples
 
 ### Generic Configuration Utility (`/alt` directory)
 
@@ -35,6 +52,7 @@ This repository documents Android networking configuration keys including:
 - **[alt/README.md](alt/README.md)** - Documentation for the generic utility
 
 The `/alt` directory contains a generic, open-ended configuration utility that works with arbitrary categories and key-value pairs, suitable for any system configuration needs beyond just networking.
+Feed the example/template into copilot. ask for settings of any variety, to be listed according to the input json as schema, in a new output.json. save the json. chmod the sh file. run the sh file pointing it to your output.json
 
 ## Quick Start
 
