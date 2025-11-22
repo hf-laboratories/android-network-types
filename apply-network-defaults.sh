@@ -1,12 +1,12 @@
 #!/system/bin/sh
-# ┌─────────────────────────────────────────────────────────────────────────────┐
-# │    __                                                                        │
-# │ |__|__                                                                       │
-# │ |   |                                                                        │
-# │                                                                              │
-# ├──────────────────────────────────────────────────────────────────────────────┤
-# │                           Laboratories                                       │
-# └──────────────────────────────────────────────────────────────────────────────┘
+# ┌──────────────────┐
+# │ ██ ██ ███████    │
+# │ ██ ██ ██         │
+# │ █████ █████      │
+# │ ██ ██ ██         │
+# │ ██ ██ ██         │
+# │   Laboratories   │
+# └──────────────────┘
 #
 # apply-network-defaults.sh
 # 
@@ -252,12 +252,15 @@ create_auto_backup() {
     local backup_type=""
     local backup_desc=""
     
+    # Generate timestamp for unique backup name
+    local backup_timestamp="$(date '+%Y%m%d_%H%M%S')"
+    
     if [ ! -d "$BACKUP_DIR" ] || [ -z "$(ls -A "$BACKUP_DIR" 2>/dev/null)" ]; then
-        backup_type="first-run"
+        backup_type="first-run-${backup_timestamp}"
         backup_desc="Automatic backup on first run"
         log_info "First run detected - creating initial backup"
     else
-        backup_type="pre-apply"
+        backup_type="pre-apply-${backup_timestamp}"
         backup_desc="Automatic backup before applying defaults"
         log_verbose "Creating backup before applying changes"
     fi

@@ -377,7 +377,7 @@ Custom categories are logged but not automatically applied. Extend the script to
 
 ## License
 
-Apache License 2.0 - See LICENSE file for details.
+GNU General Public License v3.0 (GPLv3) - See LICENSE file for details.
 
 ## Related Files
 

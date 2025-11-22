@@ -278,7 +278,7 @@ These scripts integrate with the existing network configuration tools:
 
 ## License
 
-Apache License 2.0 - See LICENSE file for details.
+GNU General Public License v3.0 (GPLv3) - See LICENSE file for details.
 
 ## Related Files
 

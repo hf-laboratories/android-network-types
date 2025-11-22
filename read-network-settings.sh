@@ -1,12 +1,12 @@
 #!/system/bin/sh
-# ┌─────────────────────────────────────────────────────────────────────────────┐
-# │    __                                                                        │
-# │ |__|__                                                                       │
-# │ |   |                                                                        │
-# │                                                                              │
-# ├──────────────────────────────────────────────────────────────────────────────┤
-# │                           Laboratories                                       │
-# └──────────────────────────────────────────────────────────────────────────────┘
+# ┌──────────────────┐
+# │ ██ ██ ███████    │
+# │ ██ ██ ██         │
+# │ █████ █████      │
+# │ ██ ██ ██         │
+# │ ██ ██ ██         │
+# │   Laboratories   │
+# └──────────────────┘
 #
 # read-network-settings.sh
 # 
@@ -268,7 +268,17 @@ JSON_FIRST_ITEM=1
 # Escape special characters for JSON strings
 escape_json_string() {
     local str="$1"
-    echo "$str" | sed 's/\\/\\\\/g; s/"/\\"/g; s/\t/\\t/g; s/\r/\\r/g; s/\n/\\n/g'
+    # Read entire input into pattern space, then escape special characters
+    # Escape backslashes first, then quotes, forward slashes, and control characters
+    # Pattern breakdown:
+    #   :a;N;$!ba - Read entire input into pattern space (handles multiline strings)
+    #   s/\\/\\\\/g - Escape backslashes (\\ -> \\\\)
+    #   s/"/\\"/g - Escape double quotes (\" -> \\\")
+    #   s/\//\\\//g - Escape forward slashes (/ -> \\/)
+    #   s/\t/\\t/g - Escape tabs
+    #   s/\r/\\r/g - Escape carriage returns
+    #   s/\n/\\n/g - Escape newlines
+    echo "$str" | sed ':a;N;$!ba;s/\\/\\\\/g; s/"/\\"/g; s/\//\\\//g; s/\t/\\t/g; s/\r/\\r/g; s/\n/\\n/g'
 }
 
 # Initialize JSON output

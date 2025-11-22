@@ -1,12 +1,12 @@
 #!/system/bin/sh
-# ┌─────────────────────────────────────────────────────────────────────────────┐
-# │    __                                                                        │
-# │ |__|__                                                                       │
-# │ |   |                                                                        │
-# │                                                                              │
-# ├──────────────────────────────────────────────────────────────────────────────┤
-# │                           Laboratories                                       │
-# └──────────────────────────────────────────────────────────────────────────────┘
+# ┌──────────────────┐
+# │ ██ ██ ███████    │
+# │ ██ ██ ██         │
+# │ █████ █████      │
+# │ ██ ██ ██         │
+# │ ██ ██ ██         │
+# │   Laboratories   │
+# └──────────────────┘
 #
 # json-parser.sh
 #
@@ -38,11 +38,94 @@
 #   json_get_keys config.json '.categories.system_properties'
 #   json_get_value config.json '.categories.system_properties.wifi."wifi.interface".default'
 
+# Validate JSON file exists and is readable
+json_validate_file() {
+    local json_file="$1"
+    
+    if [ -z "$json_file" ]; then
+        echo "Error: JSON file path not provided" >&2
+        return 1
+    fi
+    
+    if [ ! -f "$json_file" ]; then
+        echo "Error: JSON file not found: $json_file" >&2
+        return 1
+    fi
+    
+    if [ ! -r "$json_file" ]; then
+        echo "Error: JSON file not readable: $json_file" >&2
+        return 1
+    fi
+    
+    return 0
+}
+
+# Basic JSON syntax validation
+json_validate_syntax() {
+    local json_file="$1"
+    
+    # Check for balanced braces and brackets
+    local open_braces=$(grep -o '{' "$json_file" | wc -l)
+    local close_braces=$(grep -o '}' "$json_file" | wc -l)
+    local open_brackets=$(grep -o '\[' "$json_file" | wc -l)
+    local close_brackets=$(grep -o '\]' "$json_file" | wc -l)
+    
+    if [ "$open_braces" -ne "$close_braces" ]; then
+        echo "Error: Unbalanced braces in JSON file (open: $open_braces, close: $close_braces)" >&2
+        return 1
+    fi
+    
+    if [ "$open_brackets" -ne "$close_brackets" ]; then
+        echo "Error: Unbalanced brackets in JSON file (open: $open_brackets, close: $close_brackets)" >&2
+        return 1
+    fi
+    
+    # Check if file starts with { or [
+    local first_char=$(grep -o '[^[:space:]]' "$json_file" | head -1)
+    if [ "$first_char" != "{" ] && [ "$first_char" != "[" ]; then
+        echo "Error: JSON file must start with '{' or '['" >&2
+        return 1
+    fi
+    
+    return 0
+}
+
+# Validate path format
+json_validate_path() {
+    local path="$1"
+    
+    if [ -z "$path" ]; then
+        echo "Error: JSON path not provided" >&2
+        return 1
+    fi
+    
+    # Path should start with a dot or be absolute
+    if ! echo "$path" | grep -qE '^\.|^[a-zA-Z]'; then
+        echo "Error: Invalid JSON path format: $path" >&2
+        return 1
+    fi
+    
+    return 0
+}
+
 # Get keys from a JSON object at the specified path
 # Returns one key per line
 json_get_keys() {
     local json_file="$1"
     local path="$2"
+    
+    # Validate inputs
+    if ! json_validate_file "$json_file"; then
+        return 1
+    fi
+    
+    if ! json_validate_path "$path"; then
+        return 1
+    fi
+    
+    if ! json_validate_syntax "$json_file"; then
+        return 1
+    fi
     
     # Convert path like '.categories.system_properties' to grep pattern
     # This is a simplified implementation for our specific JSON structure
@@ -73,7 +156,15 @@ json_get_keys() {
             }
         }
     }
-    ' "$json_file" | sort -u
+    ' "$json_file" 2>/dev/null | sort -u
+    
+    # Check if awk succeeded
+    if [ $? -ne 0 ]; then
+        echo "Error: Failed to parse JSON file" >&2
+        return 1
+    fi
+    
+    return 0
 }
 
 # Get a value from JSON at the specified path
@@ -81,6 +172,19 @@ json_get_keys() {
 json_get_value() {
     local json_file="$1"
     local path="$2"
+    
+    # Validate inputs
+    if ! json_validate_file "$json_file"; then
+        return 1
+    fi
+    
+    if ! json_validate_path "$path"; then
+        return 1
+    fi
+    
+    if ! json_validate_syntax "$json_file"; then
+        return 1
+    fi
     
     # Convert path like '.categories.system_properties.wifi."wifi.interface".default'
     # to a pattern we can search for
@@ -129,7 +233,16 @@ json_get_value() {
             }
         }
     }
-    ' "$json_file"
+    ' "$json_file" 2>/dev/null
+    
+    # Check if awk succeeded
+    local awk_status=$?
+    if [ $awk_status -ne 0 ]; then
+        echo "Error: Failed to parse JSON file" >&2
+        return 1
+    fi
+    
+    return 0
 }
 
 # Simpler approach: Get all keys at a specific category level

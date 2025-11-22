@@ -1,12 +1,12 @@
 #!/system/bin/sh
-# ┌─────────────────────────────────────────────────────────────────────────────┐
-# │    __                                                                        │
-# │ |__|__                                                                       │
-# │ |   |                                                                        │
-# │                                                                              │
-# ├──────────────────────────────────────────────────────────────────────────────┤
-# │                           Laboratories                                       │
-# └──────────────────────────────────────────────────────────────────────────────┘
+# ┌──────────────────┐
+# │ ██ ██ ███████    │
+# │ ██ ██ ██         │
+# │ █████ █████      │
+# │ ██ ██ ██         │
+# │ ██ ██ ██         │
+# │   Laboratories   │
+# └──────────────────┘
 #
 # restore-network-settings.sh
 #
@@ -303,7 +303,7 @@ confirm_restore() {
     printf "Current settings will be replaced with values from:\n"
     printf "  %s\n" "$backup_file"
     echo ""
-    printf "Are you sure you want to continue? (yes/no): "
+    printf "Are you sure you want to continue? (y/yes or n/no): "
     
     read -r response
     
@@ -377,6 +377,7 @@ restore_system_properties() {
     local prop_name=""
     local prop_value=""
     local count=0
+    local failures=0
     
     while IFS= read -r line; do
         # Detect system property sections
@@ -411,13 +412,21 @@ restore_system_properties() {
                         log_verbose "Setting property: $prop_name = $prop_value"
                         
                         if command -v setprop >/dev/null 2>&1; then
-                            setprop "$prop_name" "$prop_value" 2>/dev/null || log_warn "Failed to set: $prop_name"
+                            if ! setprop "$prop_name" "$prop_value" 2>/dev/null; then
+                                log_warn "Failed to set: $prop_name"
+                                failures=$((failures + 1))
+                            fi
                         else
                             log_warn "setprop not available, skipping: $prop_name"
+                            failures=$((failures + 1))
                         fi
                     else
                         if command -v setprop >/dev/null 2>&1; then
-                            setprop "$prop_name" "$prop_value" 2>/dev/null
+                            if ! setprop "$prop_name" "$prop_value" 2>/dev/null; then
+                                failures=$((failures + 1))
+                            fi
+                        else
+                            failures=$((failures + 1))
                         fi
                     fi
                 fi
@@ -429,6 +438,9 @@ restore_system_properties() {
     done < "$backup_file"
     
     log_info "Processed $count system properties"
+    if [ "$failures" -gt 0 ]; then
+        log_warn "$failures system properties failed to apply"
+    fi
 }
 
 # Restore kernel parameters
@@ -441,6 +453,7 @@ restore_kernel_parameters() {
     local param_name=""
     local param_value=""
     local count=0
+    local failures=0
     
     while IFS= read -r line; do
         if echo "$line" | grep -q '"kernel_parameter_'; then
@@ -468,9 +481,14 @@ restore_kernel_parameters() {
                         echo "[DRY-RUN] Would set kernel parameter: $param_name = $param_value"
                     elif [ "$VERBOSE" -eq 1 ]; then
                         log_verbose "Setting kernel parameter: $param_name = $param_value"
-                        echo "$param_value" > "$param_name" 2>/dev/null || log_warn "Failed to set: $param_name"
+                        if ! echo "$param_value" > "$param_name" 2>/dev/null; then
+                            log_warn "Failed to set: $param_name"
+                            failures=$((failures + 1))
+                        fi
                     else
-                        echo "$param_value" > "$param_name" 2>/dev/null
+                        if ! echo "$param_value" > "$param_name" 2>/dev/null; then
+                            failures=$((failures + 1))
+                        fi
                     fi
                 fi
                 
@@ -481,6 +499,9 @@ restore_kernel_parameters() {
     done < "$backup_file"
     
     log_info "Processed $count kernel parameters"
+    if [ "$failures" -gt 0 ]; then
+        log_warn "$failures kernel parameters failed to apply"
+    fi
 }
 
 # Restore environment variables
@@ -546,6 +567,7 @@ restore_android_settings() {
     local setting_key=""
     local setting_value=""
     local count=0
+    local failures=0
     
     while IFS= read -r line; do
         if echo "$line" | grep -q '"android_setting_'; then
@@ -581,13 +603,21 @@ restore_android_settings() {
                                 log_verbose "Setting Android setting: $namespace/$key = $setting_value"
                                 
                                 if command -v settings >/dev/null 2>&1; then
-                                    settings put "$namespace" "$key" "$setting_value" 2>/dev/null || log_warn "Failed to set: $namespace/$key"
+                                    if ! settings put "$namespace" "$key" "$setting_value" 2>/dev/null; then
+                                        log_warn "Failed to set: $namespace/$key"
+                                        failures=$((failures + 1))
+                                    fi
                                 else
                                     log_warn "settings command not available"
+                                    failures=$((failures + 1))
                                 fi
                             else
                                 if command -v settings >/dev/null 2>&1; then
-                                    settings put "$namespace" "$key" "$setting_value" 2>/dev/null
+                                    if ! settings put "$namespace" "$key" "$setting_value" 2>/dev/null; then
+                                        failures=$((failures + 1))
+                                    fi
+                                else
+                                    failures=$((failures + 1))
                                 fi
                             fi
                         fi
@@ -601,6 +631,9 @@ restore_android_settings() {
     done < "$backup_file"
     
     log_info "Processed $count Android settings"
+    if [ "$failures" -gt 0 ]; then
+        log_warn "$failures Android settings failed to apply"
+    fi
 }
 
 # Main function
